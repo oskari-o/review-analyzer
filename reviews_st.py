@@ -131,12 +131,12 @@ def analyze_reviews():
       api_key = st.secrets['mistral_api_key']
       with text_holder:
         with st.spinner('Analyzing reviews with Mistral 7B...'):
-          completion = get_mistral_completion(combined_prompt, api_key)
+          completion = get_mistral_completion(combined_prompt, system_prompt_input, api_key)
     case 'GPT-4-Turbo':
       api_key = st.secrets['openai_api_key']
       with text_holder:
         with st.spinner('Analyzing reviews with GPT-4 Turbo...'):
-          completion = get_gpt4_completion(combined_prompt, api_key)
+          completion = get_gpt4_completion(combined_prompt, system_prompt_input, api_key)
   st.session_state['analysis_result'] = st.session_state['latest_filters'] + '\n\n' + f"Model: {selected_model}" + '\n\n' + completion
 
 analyze_button_text = "Analyze reviews"

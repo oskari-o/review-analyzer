@@ -2,9 +2,8 @@ from openai import OpenAI
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
 import tiktoken
-from prompts import system_prompt
 
-def get_gpt4_completion(prompt, api_key):
+def get_gpt4_completion(prompt, system_prompt, api_key):
     """Returns the completion from GPT-4."""
     tokens = count_gpt4_tokens(prompt)
     print(f"\n\nNew Prompt with {tokens} - Response:\n\n")
@@ -30,7 +29,7 @@ def count_gpt4_tokens(prompt: str):
     token_count = len(encoding.encode(prompt))
     return token_count
 
-def get_mistral_completion(prompt, api_key):
+def get_mistral_completion(prompt, system_prompt, api_key):
     """Returns the completion from Mistral 7B."""
     client = MistralClient(api_key=api_key)
     stream = client.chat_stream(
