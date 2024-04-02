@@ -44,11 +44,13 @@ st.caption('View the full dataset below. Data source: [Kaggle](https://www.kaggl
 
 data = pd.read_csv('data/London_hotel_reviews.csv', encoding='ISO-8859-1')
 
+# Add a new first column to be the index
+data.insert(0, '#', range(1, 1 + len(data)))
+
 with st.expander(f'###### Full dataset - {len(data)} reviews', expanded=False):
   st.dataframe(data)
 
-# Add a new first column to be the index
-data.insert(0, '#', range(1, 1 + len(data)))
+
 
 data['Date Of Review as Date'] = pd.to_datetime(data['Date Of Review'])
 
@@ -79,7 +81,7 @@ filtered_data = data[(data['Property Name'] == selected_name) &
                      (data['Date Of Review as Date'] <= selected_end_date)]
 
 st.markdown(f'###### Filtered dataset - {len(filtered_data)} reviews')
-st.dataframe(filtered_data.drop(columns=['#']))
+st.dataframe(filtered_data)
 
 def serialize_filters():
   return f"Data for Hotel: {selected_name} | Ratings: {' '.join([str(r) for r in selected_ratings])} | Date Range: {str(selected_start_date.date())} - {str(selected_end_date.date())} | Total reviews: {len(filtered_data)}"
